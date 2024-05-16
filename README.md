@@ -1,6 +1,7 @@
 # The Trap Stack
 
 ## What's Included
+
 - [Remix ❤️ Vite](https://remix.run/docs/en/main/future/vite)
 - [Remix Developer Tools](https://remix-development-tools.fly.dev/)
 - ORM and Postgresql setup with [Prisma](https://www.prisma.io/)
@@ -109,7 +110,8 @@ npm run dev
 ## Deployment
 
 The Trap Stack leaves deployment up to the user. When choosing a hosting provider it is best to remember the following
-* This stack is built with Vite, so make sure your hosting provider supports it!
+
+- This stack is built with Vite, so make sure your hosting provider supports it!
 
 First, build your app for production:
 

@@ -1,23 +1,17 @@
-import { faker } from "@faker-js/faker";
-import { User } from "@prisma/client";
+import { user } from "@prisma/client";
 import { createUser } from "~/models/user.server";
 
-export const createNormalUser = (user?: Omit<User, "id">) => {
+export const createNormalUser = (user: Pick<user, "email" | "username">) => {
   return createUser({
-    email: faker.internet.email().toLowerCase(),
-    firstName: faker.internet.displayName(),
-    lastName: faker.internet.displayName(),
-    role: "USER",
     ...user,
+    role: "USER",
   });
 };
 
-export const createAdminUser = (user?: Omit<User, "id">) => {
+export const createAdminUser = (user: Pick<user, "email" | "username">) => {
   return createUser({
-    email: faker.internet.email().toLowerCase(),
+    email: user.email,
+    username: user.username,
     role: "ADMIN",
-    firstName: faker.internet.displayName(),
-    lastName: faker.internet.displayName(),
-    ...user,
   });
 };

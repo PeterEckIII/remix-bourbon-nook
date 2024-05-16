@@ -14,7 +14,7 @@ module.exports = {
       jsx: true,
     },
   },
-  "rules": {
+  rules: {
     "no-mixed-spaces-and-tabs": 0, // disable rule
   },
   env: {
@@ -22,7 +22,7 @@ module.exports = {
     commonjs: true,
     es6: true,
   },
-  ignorePatterns: ["!**/.server", "!**/.client"],
+  ignorePatterns: ["!**/.server", "!**/.client", "./app/components/ui/**/*"],
 
   // Base config
   extends: ["eslint:recommended", "plugin:storybook/recommended"],
@@ -49,6 +49,14 @@ module.exports = {
         "import/resolver": {
           typescript: {},
         },
+      },
+    },
+    // shadcn
+    {
+      files: ["./app/components/ui/**/*"],
+      rules: {
+        "react/prop-types": "off",
+        "react-refresh/only-export-components": "off",
       },
     },
 

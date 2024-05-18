@@ -51,7 +51,7 @@ jobs:
       - name: ʦ TypeScript
         run: npm run typecheck --if-present
   e2e:
-    name: 🧪 E2E Tests
+    name: 🎭 Playwright (e2e)
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -66,7 +66,7 @@ jobs:
         run: npm ci
       - name: 🖥️ Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: 🎭 Run Playwright
+      - name: 🧪 Run Playwright
         run: npx playwright test
       - name: 📊 Upload artifacts
         uses: actions/upload-artifact@v4

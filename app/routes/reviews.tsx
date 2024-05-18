@@ -1,8 +1,23 @@
+import { LoaderFunctionArgs } from "@remix-run/node";
 import DashboardCards from "~/components/DashboardCards/DashboardCards";
 import RecentBottles from "~/components/RecentItems/RecentBottles";
 import RecentReviews from "~/components/RecentItems/RecentReviews";
 import BottleTable from "~/components/Table/BottleTable";
 import ReviewTable from "~/components/Table/ReviewTable";
+import { getBottlesForUser } from "~/models/bottle.server";
+import { getReviewsForUser } from "~/models/reviews.sever";
+import { requireUserId } from "~/utils/session.server";
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const userId = await requireUserId(request);
+  const reviewPromise = await getReviewsForUser(userId);
+  const bottlePromise = await getBottlesForUser(userId);
+
+  return {
+    reviews: reviewPromise,
+    bottles: bottlePromise,
+  };
+};
 
 export default function ReviewRoute() {
   return (

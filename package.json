@@ -31,7 +31,7 @@
     "storybook-build": "storybook build",
     "typecheck": "tsc",
     "preunit": "npm run script \"npm run db:up && npx prisma migrate deploy\" test",
-    "unit": "npm run script \"vitest run --config ./vitest.config.unit.ts\" test",
+    "unit": "npm run script \"vitest run --config ./vitest.unit.config.ts\" test",
     "postunit": "npm run db:down"
   },
   "dependencies": {

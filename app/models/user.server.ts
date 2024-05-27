@@ -1,10 +1,25 @@
-import type { user } from "@prisma/client";
+import type { password, user } from "@prisma/client";
+import bcrypt from "bcryptjs";
 import { prisma } from "../utils/db.server";
 
 export async function createUser(
-  user: Omit<user, "id" | "updatedAt" | "createdAt">
+  email: user["email"],
+  username: user["username"],
+  password: password["hash"]
 ) {
-  return await prisma.user.create({ data: user });
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  return await prisma.user.create({
+    data: {
+      email,
+      username,
+      password: {
+        create: {
+          hash: hashedPassword,
+        },
+      },
+    },
+  });
 }
 
 export async function getUserById(userId: user["id"]) {

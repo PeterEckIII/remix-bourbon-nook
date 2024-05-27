@@ -30,7 +30,7 @@ export default function AppWithProviders() {
   const data = useLoaderData<typeof loader>();
 
   return (
-    <ThemeProvider specifiedTheme={data.theme} themeAction="api/set-theme">
+    <ThemeProvider specifiedTheme={data.theme} themeAction="/api/set-theme">
       <App />
     </ThemeProvider>
   );

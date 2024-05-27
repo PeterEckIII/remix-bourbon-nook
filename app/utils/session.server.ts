@@ -1,8 +1,10 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
+import bcrypt from "bcryptjs";
 import invariant from "tiny-invariant";
 
-import type { user } from "@prisma/client";
+import type { password, user } from "@prisma/client";
 import { getUserById } from "~/models/user.server";
+import { prisma } from "./db.server";
 
 invariant(
   process.env.SESSION_SECRET,
@@ -88,6 +90,36 @@ export async function createUserSession({
       }),
     },
   });
+}
+
+export async function verifyLogin(
+  email: user["email"],
+  password: password["hash"]
+) {
+  const userWithPassword = await prisma.user.findUnique({
+    where: { email },
+    include: {
+      password: true,
+    },
+  });
+
+  if (!userWithPassword || !userWithPassword.password) {
+    return null;
+  }
+
+  const isValid = await bcrypt.compare(
+    password,
+    userWithPassword.password.hash
+  );
+
+  if (!isValid) {
+    return null;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { password: _password, ...userWithoutPassword } = userWithPassword;
+
+  return userWithoutPassword;
 }
 
 export async function logout(request: Request) {

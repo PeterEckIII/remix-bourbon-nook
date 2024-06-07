@@ -30,7 +30,7 @@ export default function Header() {
           Bottles
         </Link>
         <Link
-          to="/bottles/new/info"
+          to="/bottles/new"
           className=" transition-colors hover:text-foreground"
         >
           Add Bottle
@@ -42,7 +42,7 @@ export default function Header() {
           Reviews
         </Link>
         <Link
-          to="/reviews/new"
+          to="/reviews/new/bottle"
           className=" transition-colors hover:text-foreground"
         >
           Add Review

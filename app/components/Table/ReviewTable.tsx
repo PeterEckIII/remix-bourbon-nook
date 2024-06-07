@@ -1,3 +1,6 @@
+// import { review } from "@prisma/client";
+import { Link } from "@remix-run/react";
+import { Link2 } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -13,8 +16,13 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/ui/table";
+import { TableReview } from "~/types/reviews";
 
-export default function ReviewTable() {
+interface ReviewTableProps {
+  reviews: TableReview[];
+}
+
+export default function ReviewTable({ reviews }: ReviewTableProps) {
   return (
     <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
       <CardHeader className="flex flex-row items-center">
@@ -39,9 +47,21 @@ export default function ReviewTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell></TableCell>
-            </TableRow>
+            {reviews.map((review) => (
+              <TableRow key={review.id}>
+                <TableCell>{review.bottle.name}</TableCell>
+                <TableCell>{review.bottle.distillery}</TableCell>
+                <TableCell>
+                  {review.bottle.region}, {review.bottle.country}
+                </TableCell>
+                <TableCell>{review.overallRating}</TableCell>
+                <TableCell>
+                  <Link to={`/reviews/${review.id}`}>
+                    <Link2 className="size-5" />
+                  </Link>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </CardContent>

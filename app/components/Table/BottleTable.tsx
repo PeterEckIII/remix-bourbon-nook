@@ -1,3 +1,4 @@
+import { BottlesForTable } from "~/types/bottles";
 import {
   Card,
   CardContent,
@@ -14,7 +15,11 @@ import {
   TableRow,
 } from "../ui/ui/table";
 
-export default function BottleTable() {
+interface BottleTableProps {
+  bottles: BottlesForTable[];
+}
+
+export default function BottleTable({ bottles }: BottleTableProps) {
   return (
     <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
       <CardHeader className="flex flex-row items-center">
@@ -37,9 +42,19 @@ export default function BottleTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell></TableCell>
-            </TableRow>
+            {bottles.map((bottle) => (
+              <TableRow key={bottle.id}>
+                <TableCell>{bottle.name}</TableCell>
+                <TableCell>{bottle.type}</TableCell>
+                <TableCell>{bottle.status}</TableCell>
+                <TableCell>{bottle.distillery}</TableCell>
+                <TableCell>
+                  {bottle.region}, {bottle.country}
+                </TableCell>
+                <TableCell>{bottle.price}</TableCell>
+                <TableCell>{bottle.age}</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </CardContent>

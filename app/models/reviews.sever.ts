@@ -12,7 +12,22 @@ export async function getReview(reviewId: review["id"]) {
 }
 
 export async function getReviewsForUser(userId: string) {
-  return await prisma.review.findMany({ where: { userId } });
+  return await prisma.review.findMany({
+    where: { userId },
+    select: {
+      id: true,
+      overallRating: true,
+      createdAt: true,
+      bottle: {
+        select: {
+          name: true,
+          distillery: true,
+          region: true,
+          country: true,
+        },
+      },
+    },
+  });
 }
 
 export async function updateReview(

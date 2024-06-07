@@ -81,7 +81,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 export default function NewBottleRoute() {
   return (
-    <Form>
+    <Form method="POST">
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Add Bottle</CardTitle>
@@ -94,9 +94,9 @@ export default function NewBottleRoute() {
           <div className="grid gap-2">
             <Label htmlFor="name">Bottle Name</Label>
             <Input
-              id="email"
-              name="email"
-              type="email"
+              id="name"
+              name="name"
+              type="name"
               placeholder="Buffalo Trace, Elijah Craig, etc."
               required
             />

@@ -11,8 +11,33 @@ export async function getBottle(bottleId: bottle["id"]) {
   return await prisma.bottle.findUnique({ where: { id: bottleId } });
 }
 
+export async function getComboboxBottles(userId: string, query: string) {
+  return await prisma.bottle.findMany({
+    where: {
+      userId,
+      OR: [
+        { name: { contains: query, mode: "insensitive" } },
+        { distillery: { contains: query, mode: "insensitive" } },
+      ],
+    },
+  });
+}
+
 export async function getBottlesForUser(userId: string) {
-  return await prisma.bottle.findMany({ where: { userId } });
+  return await prisma.bottle.findMany({
+    where: { userId },
+    select: {
+      id: true,
+      name: true,
+      type: true,
+      status: true,
+      distillery: true,
+      region: true,
+      country: true,
+      price: true,
+      age: true,
+    },
+  });
 }
 
 export async function updateBottle(

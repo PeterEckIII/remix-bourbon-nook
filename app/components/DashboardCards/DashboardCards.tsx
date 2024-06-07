@@ -6,6 +6,12 @@ import {
   CardTitle,
 } from "~/components/ui/ui/card";
 
+// interface DashboardCardsProps {
+//   openBottles: number;
+//   totalBottles: number;
+//   totalReviews: number;
+// }
+
 export default function DashboardCards() {
   return (
     <>

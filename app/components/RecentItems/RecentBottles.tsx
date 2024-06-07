@@ -1,6 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/ui/card";
 
+// interface RecentBottlesProps {
+//   recentBottles: bottle[];
+// }
+
 export default function RecentBottles() {
   return (
     <Card x-chunk="dashboard-01-chunk-5">

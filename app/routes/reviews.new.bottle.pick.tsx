@@ -13,6 +13,10 @@ import clsx from "clsx";
 import { Check, ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import useDebounce from "~/hooks/useDebounce";
+import { getBottle } from "~/models/bottle.server";
+import { RedisFormData } from "~/types/redis";
+import { generateCode, saveToRedis } from "~/utils/redis.server";
+import { requireUserId } from "~/utils/session.server";
 import { LoaderData } from "./api.bottles";
 
 export const meta: MetaFunction = () => {
@@ -23,9 +27,36 @@ export const meta: MetaFunction = () => {
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
+  await requireUserId(request);
   const formData = await request.formData();
-  const chosenBottle = formData.get("bottleId")?.toString();
-  return redirect(`/reviews/new/setting?bottleId=${chosenBottle}`);
+  const bottleId = formData.get("bottleId")?.toString() ?? "";
+
+  const bottle = await getBottle(bottleId);
+  if (!bottle) {
+    throw new Error("Invalid bottle");
+  }
+
+  const formId = await generateCode(6);
+  const redisObject: RedisFormData = {
+    formId,
+    bottleId: bottle.id,
+    name: bottle.name,
+    type: bottle.type,
+    status: bottle.status,
+    distillery: bottle.distillery as string,
+    country: bottle.country as string,
+    region: bottle.region as string,
+    price: bottle.price as string,
+    age: bottle.age as string,
+    alcoholPercent: bottle.alcoholPercent as string,
+    year: bottle.year as string,
+    barrel: bottle.barrel as string,
+    finishing: bottle.finishing as string,
+  };
+
+  await saveToRedis(redisObject);
+
+  return redirect(`/reviews/new/setting?formId=${formId}`);
 };
 
 export default function NewReviewPickBottleRoute() {

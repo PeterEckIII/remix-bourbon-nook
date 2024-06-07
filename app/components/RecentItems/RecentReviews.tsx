@@ -7,10 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/ui/card";
-import { ReviewsForTable } from "~/types/reviews";
+import { ReviewsWithBottlesSerialized } from "~/models/reviews.sever";
 
 interface RecentReviewsProps {
-  recentReviews: ReviewsForTable[];
+  recentReviews: ReviewsWithBottlesSerialized[];
 }
 
 export default function RecentReviews({ recentReviews }: RecentReviewsProps) {

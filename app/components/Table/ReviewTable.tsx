@@ -16,10 +16,10 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/ui/table";
-import { TableReview } from "~/types/reviews";
+import { ReviewsWithBottlesSerialized } from "~/models/reviews.sever";
 
 interface ReviewTableProps {
-  reviews: TableReview[];
+  reviews: ReviewsWithBottlesSerialized[];
 }
 
 export default function ReviewTable({ reviews }: ReviewTableProps) {
@@ -49,10 +49,10 @@ export default function ReviewTable({ reviews }: ReviewTableProps) {
           <TableBody>
             {reviews.map((review) => (
               <TableRow key={review.id}>
-                <TableCell>{review.bottle.name}</TableCell>
-                <TableCell>{review.bottle.distillery}</TableCell>
+                <TableCell>{review.bottle?.name}</TableCell>
+                <TableCell>{review.bottle?.distillery}</TableCell>
                 <TableCell>
-                  {review.bottle.region}, {review.bottle.country}
+                  {review.bottle?.region}, {review.bottle?.country}
                 </TableCell>
                 <TableCell>{review.overallRating}</TableCell>
                 <TableCell>

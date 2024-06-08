@@ -1,4 +1,4 @@
-import { review } from "@prisma/client";
+import { Prisma, review } from "@prisma/client";
 import { prisma } from "~/utils/db.server";
 
 export async function createReview(
@@ -11,19 +11,50 @@ export async function getReview(reviewId: review["id"]) {
   return await prisma.review.findUnique({ where: { id: reviewId } });
 }
 
-export async function getReviewsForUser(userId: string) {
+const reviewSelect = {
+  id: true,
+  createdAt: true,
+  overallRating: true,
+  bottle: {
+    select: {
+      name: true,
+      distillery: true,
+      region: true,
+      country: true,
+      price: true,
+      age: true,
+    },
+  },
+} satisfies Prisma.reviewSelect;
+
+export type ReviewsWithBottles = Prisma.reviewGetPayload<{
+  select: typeof reviewSelect;
+}>;
+
+export type ReviewsWithBottlesSerialized = Omit<
+  ReviewsWithBottles,
+  "createdAt"
+> & {
+  createdAt: string;
+};
+
+export async function getReviewsForUser(
+  userId: string
+): Promise<ReviewsWithBottles[]> {
   return await prisma.review.findMany({
     where: { userId },
     select: {
       id: true,
-      overallRating: true,
       createdAt: true,
+      overallRating: true,
       bottle: {
         select: {
           name: true,
           distillery: true,
           region: true,
           country: true,
+          price: true,
+          age: true,
         },
       },
     },

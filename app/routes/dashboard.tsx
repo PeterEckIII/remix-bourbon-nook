@@ -2,7 +2,9 @@ import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import DashboardCards from "~/components/DashboardCards/DashboardCards";
 import RecentBottles from "~/components/RecentItems/RecentBottles";
+import RecentReviews from "~/components/RecentItems/RecentReviews";
 import BottleTable from "~/components/Table/BottleTable";
+import ReviewTable from "~/components/Table/ReviewTable";
 import { getBottlesForUser } from "~/models/bottle.server";
 import { getReviewsForUser } from "~/models/reviews.sever";
 import { requireUserId } from "~/utils/session.server";
@@ -20,7 +22,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export default function Dashboard() {
-  const { bottles } = useLoaderData<typeof loader>();
+  const { bottles, reviews } = useLoaderData<typeof loader>();
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -31,10 +33,8 @@ export default function Dashboard() {
         <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
           <BottleTable bottles={bottles} />
           <RecentBottles />
-          {/*  
           <ReviewTable reviews={reviews} />
           <RecentReviews recentReviews={reviews} />
-          */}
         </div>
       </main>
     </div>
